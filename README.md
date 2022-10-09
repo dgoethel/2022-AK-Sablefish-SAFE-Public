@@ -6,3 +6,5 @@ The files needed to run the 2022 sablefish stock assessment are provided in the 
 The results from the 21.12 Base Model run for terminal year 2022 are provided in the 'Results' folder.
 
 The final 2022 SAFE Report will be uploaded after it is submitted to the groundfish plan team.
+
+Full documentation for model 21.12 can be found in the 2021 SAFE report: https://www.fisheries.noaa.gov/resource/data/2021-assessment-sablefish-stock-alaska.

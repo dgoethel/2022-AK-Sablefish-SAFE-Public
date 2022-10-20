@@ -6,7 +6,7 @@
 rm(list=(ls()))
 
 ############### INPUTS TO BE ALTERED ######################################
-dir_master<-"C:\\Users\\daniel.goethel\\Desktop\\Model\\2. Base MCMC"      ## location of SA Outputs
+dir_master<-"D:\\NOAA FILES\\Work Projects\\AFSC\\Sablefish Assessment\\2022 Assessment\\_Final Model\\2. Base MCMC"      ## location of SA Outputs
 dir_R<-paste0(dir_master,'\\R code',sep='')  ## location of R graphics files
 SA_curr_YR<-2022 #### enter terminal year for previous stock assessment model
 SA_prev_YR<-2021 #### enter terminal year for previous stock assessment model
@@ -462,62 +462,49 @@ ggsave(paste0(dir_plots , "//Fig. 3.50. Percent Contr to SSB by YC.png"),plot=ss
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-########### Get Projection Outputs ###########################################
+########### Get Projection Outputs for PT Final SUmmary Table (last in text table with age-4+ bio)  ###########################################
 
 n.f<-sab_curr$natage.female
 n.m<-sab_curr$natage.male
 growth.mat<-sab_curr$growthmat
-wt_f<-growth.mat$wt.f  
-wt_m<-growth.mat$wt.m
+wt_f<-growth.mat$wt.f.block1  
+wt_m<-growth.mat$wt.m.block1
 
-age4bio<-n.f*wt_f+n.m*wt_m
-age4bio<-age4bio[,-c(1,2)] # only age-4+
-age4bio<-rowSums(age4bio)
+#age4bio<-n.f*wt_f+n.m*wt_m
+#age4bio<-age4bio[,-c(1,2)] # only age-4+
+#age4bio<-rowSums(age4bio)
+
+
 n.f.proj.1<-as.numeric(unlist(strsplit(temp[grep("N_proj_f",temp)+1],split=" "))[2:31]) # 1st year of projection
 n.f.proj.2<-as.numeric(unlist(strsplit(temp[grep("N_proj_f",temp)+2],split=" "))[2:31]) # 2nd year of projection
 
 n.m.proj.1<-as.numeric(unlist(strsplit(temp[grep("N_proj_m",temp)+1],split=" "))[2:31])
 n.m.proj.2<-as.numeric(unlist(strsplit(temp[grep("N_proj_m",temp)+2],split=" "))[2:31])
 
-### projected 2020 and 2021 age 4 bio
-age4bio.1<-n.f.proj.1*wt_f+n.m.proj.1*wt_m
-age4bio.1<-age4bio.1[-c(1,2)] #only age-4+
-age4bio.1<-sum(age4bio.1)
+### projected 2023 and 2024 age 4 bio
+age4bio.yr1_proj<-n.f.proj.1*wt_f+n.m.proj.1*wt_m
+age4bio.yr1_proj2<-age4bio.yr1_proj[-c(1,2)] #only age-4+
+age4bio.yr1_proj.final<-sum(age4bio.yr1_proj2)
 
-age4bio.2<-n.f.proj.2*wt_f+n.m.proj.2*wt_m
-age4bio.2<-age4bio.2[-c(1,2)]
-age4bio.2<-sum(age4bio.2)
-
-############################# Need to find where data files are for remainder of graphics
+age4bio.yr2_proj<-n.f.proj.2*wt_f+n.m.proj.2*wt_m
+age4bio.yr2_proj2<-age4bio.yr2_proj[-c(1,2)] #only age-4+
+age4bio.yr2_proj.final<-sum(age4bio.yr2_proj2)
 
 
-########################################################################################
-########################################################################################
-#### WHERE DOES temp_surv COME FROM? ####################################################################################
-#### Why is this info not saved anywhere? (what used for) ####################################################################################
-###################################################################################
+# now assign to region based on survey proportions
 
-### numbers for Plan Team table
-age4bio[length(age4bio)]*temp_surv[1,]
-age4bio.1* temp_surv[1,]
-age4bio.2* temp_surv[1,]
-##GOA
-sum(age4bio.1* temp_surv[1,][c(3,4,5,6)])
-sum(age4bio.2* temp_surv[1,][c(3,4,5,6)])
-################################################################################
+AI_prop <- term_apportionment[1]
+BS_prop <- term_apportionment[2]
+GOA_prop <- sum(term_apportionment[c(3:6)])
 
+age4_bio_AI_proj_yr1 <-  age4bio.yr1_proj.final*AI_prop
+age4_bio_AI_proj_yr2 <-  age4bio.yr2_proj.final*AI_prop
 
+age4_bio_BS_proj_yr1 <-  age4bio.yr1_proj.final*BS_prop
+age4_bio_BS_proj_yr2 <-  age4bio.yr2_proj.final*BS_prop
+
+age4_bio_GOA_proj_yr1 <-  age4bio.yr1_proj.final*GOA_prop
+age4_bio_GOA_proj_yr2 <-  age4bio.yr2_proj.final*GOA_prop
 
 
 

@@ -57,17 +57,19 @@ get_pearson_res = function(iter_wt, iss, obs, pred) {
 #' @param data Dataframe with columns year, index, resid
 #' @param comp_type Composition type 
 #' @param res_type Residual type
+#' @param ymin lower ylimit on axis
 #'
 #' @return
 #' @export
 #'
 #' @examples
-res_plot = function(data, comp_type, res_type) {
+res_plot = function(data, comp_type, res_type, ymin) {
   require(ggplot2)
   ggplot(data, aes(year, index, size=abs(resid), color=resid>0)) + geom_point() +
     labs(x = "Year", y = comp_type, title = res_type, 
          size = "Absolute Residual", color = "Residual > 0") +
     theme_reg() +
+    scale_y_continuous(limits = c(ymin, NA)) +
     guides(color = guide_legend(order = 0),
            size = guide_legend(order = 1))
 }

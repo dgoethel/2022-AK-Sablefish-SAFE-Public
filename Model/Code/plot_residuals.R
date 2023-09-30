@@ -34,7 +34,7 @@ plot_ages = seq(2, 31, 1) # ages for plotting
 osa_lens = seq(43, 99, 2)  # start at 43 bc dropping first bin
 osa_ages = seq(3, 31, 1) # start at 3 bc dropping first bin
 
-pdf(here("Results", "Figures", "Residual_Comparison.pdf"))
+pdf(here("Results", "Residual_Comparison.pdf"))
 # Fishery LL Age Comps ----------------------------------------------------
 # get effective sample size weights
 iter_wt = parse_number(ctl_wts[str_detect(ctl_wts, "#wt fish1 age comp iter")]) 

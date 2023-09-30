@@ -18,7 +18,7 @@ get_osa_res = function(obs, pred, iss, iter_wt, index, drop_bin) {
   ess_wt = round(iss * iter_wt, 0) # get ess
   obs1 = round((obs + 0.001) * (ess_wt)) # calculate observations in numbers
   pred = pred + 0.001 # add constant so we can divide finite
-  # determine which bin to drop
+  # determine which bin to drop (software drops last bin automatically)
   obs1 <- cbind(obs1[,-drop_bin], obs1[,drop_bin])
   pred1 <- cbind(pred[,-drop_bin], pred[,drop_bin])
   
@@ -47,7 +47,7 @@ get_pearson_res = function(iter_wt, iss, obs, pred) {
   pred = pred + 0.001
   # Calculate Pearson residuals
   pearson_res = (obs-pred)/sqrt(pred* (1 - pred) / ess_wt) 
-  pearson_res = melt(pearson_res) 
+  pearson_res = reshape2::melt(pearson_res) 
   names(pearson_res) = c("year", "index", "resid")
   return(pearson_res)
 }
